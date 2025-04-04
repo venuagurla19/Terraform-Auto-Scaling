@@ -16,7 +16,7 @@ resource "aws_iam_role" "cluster" {
 
 resource "aws_iam_group_policy_attachment" "cluster_policy" {
     policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-    role = aws_iam_role.cluster.name
+    role       = aws_iam_role.cluster.name
 }
 
 resource "aws_eks_cluster" "main" {
@@ -38,10 +38,10 @@ depends_on = [
 resource "aws_iam_role" "node" {
     name = "${var.cluster_name}-node-role"
     assume_role_policy = jsondecode({
-        "Version": "2012-10-17"
+        "Version": "2012-10-17",
         "Statement": [{
-            Action = "sts:AssumeRole"
-            Effect = "Allow"
+            Action = "sts:AssumeRole",
+            Effect = "Allow",
             Principal = {
                 Service = "ec2.amazonaws.com"
                 }
