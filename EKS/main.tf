@@ -44,4 +44,6 @@ module "eks" {
             max_size     = 4
             min_size     = 1
         }
+        }
     }
+}
