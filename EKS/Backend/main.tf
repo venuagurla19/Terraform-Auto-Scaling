@@ -2,7 +2,7 @@
     region = "us-west-2"
     }
 
-    resource "aws_s3_bucket" "terraform_state" {
+    resource "aws_s3_bucket" "venu_terraform_state" {
     bucket = "demo-terraform-eks-state-s3-bucket"
 
     lifecycle {
