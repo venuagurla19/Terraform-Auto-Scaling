@@ -14,8 +14,8 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public" {
     count             = length(var.public_subnet_cidrs)
     vpc_id            = aws_vpc.main.id
-    cidr_block        = var.public_cidr
-    availability_zone = var.availability_zones[count.index].
+    cidr_block        = var.public_subnet_cidr[count.index]
+    availability_zone = var.availability_zones[count.index]
     map_public_ip_on_launch = true
     
     tags = {
@@ -26,8 +26,8 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
     count             = length(var.private_subnet_cidrs)
     vpc_id            = aws_vpc.main.id
-    cidr_block        = var.private_cidr
-    availability_zone = var.availability_zones[count.index].
+    cidr_block        = var.private_subnet_cidr[count.index]
+    availability_zone = var.availability_zones[count.index]
     map_private_ip_on_launch = true
     
     tags = {
@@ -65,6 +65,11 @@ resource "aws_route_table_association" "public" {
 
 }
 
+resource = "aws_eip" "nat" {
+    count = length(var.public_subnet_cidrs)
+    vpc = true
+}
+
 resource "aws_nat_gateway" "main" {
     count       = length(var.public_subnet_cidrs)
     allocation_id = aws_eip.nat[count.index].id
@@ -81,10 +86,10 @@ resource "aws_route_table" "private" {
 
     route {
         cidr_block = "0.0.0.0/0"
-        gateway_id = aws_nat_gateway.main[count.index].id
+        nat_gateway_id = aws_nat_gateway.main[count.index % length(var.public_subnet_cidrs)].id
     }
     tags = {
-        Name = "${var.cluster_name}-private-${countindex + 1}"
+        Name = "${var.cluster_name}-private-${count.index + 1}"
     }
 }
 
