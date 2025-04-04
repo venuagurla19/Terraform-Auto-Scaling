@@ -36,14 +36,14 @@ module "eks" {
     cluster_version = var.cluster_version
     subnet_ids     = module.vpc.private_subnet_ids
     node_group = {
-        general = {
-        instance_types = ["t3.medium"]
+    general = {
+        instance_types  = ["t3.medium"]
         capacity_types  = "ON_DEMAND"
         scaling_config = {
-            desired_size = 2
-            max_size     = 4
-            min_size     = 1
-        }
+        desired_size = 2
+        max_size     = 4
+        min_size     = 1
+            }
         }
     }
 }
