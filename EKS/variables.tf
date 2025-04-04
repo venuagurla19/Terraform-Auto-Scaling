@@ -10,8 +10,8 @@ variable "vpc_cidr" {
     default     = "10.0.0.0/16"
     }
 
-variable "availability_zones" {
-    description = "Availability zones"
+variable "availability_zone" {
+    description = "Availability zone"
     type        = list(string)
     default     = ["us-west-2a", "us-west-2b", "us-west-2c"]
     }
@@ -40,7 +40,7 @@ variable "cluster_version" {
     default     = "1.30"
     }
 
-variable "node_groups" {
+variable "node_group" {
     description = "EKS node group configuration"
     type = map(object({
         instance_types = list(string)
