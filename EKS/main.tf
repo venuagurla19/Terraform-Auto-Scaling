@@ -35,5 +35,13 @@ module "eks" {
     cluster_name   = var.cluster_name
     cluster_version = var.cluster_version
     subnet_ids     = module.vpc.private_subnet_ids
-    node_group     = var.node_group # Correct name
+    node_group = {
+        general = {
+        instance_types = ["t3.medium"]
+        capacity_type  = "ON_DEMAND"
+        scaling_config = {
+            desired_size = 2
+            max_size     = 4
+            min_size     = 1
+        }
     }
