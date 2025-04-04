@@ -37,8 +37,9 @@ depends_on = [
 
 resource "aws_iam_role" "node" {
     name = "${var.cluster_name}-node-role"
-    assume_role_policy = jsondecode({
-        "Version": "2012-10-17",
+
+    assume_role_policy = jsonencode({
+        "Version"= "2012-10-17",
         "Statement": [{
             Action = "sts:AssumeRole",
             Effect = "Allow",
@@ -54,11 +55,11 @@ resource "aws_iam_group_policy_attachment" "node_policy" {
         "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
         "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
         "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-        ]}
+    ])
 
         policy_arn = each.value
         role       = aws_iam_role.node.name
-
+}
 
 resource "aws_eks_node_group" "main" {
     for_each = var.node.groups
