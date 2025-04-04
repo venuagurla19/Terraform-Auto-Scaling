@@ -42,6 +42,7 @@ resource "aws_internet_gateway" "main" {
     tags = {
         Name = "${var.cluster_name}-igw"
         }
+}
 
 resource "aws_route_table" "public" {
     count = length(var.public_subnet_cidrs)
