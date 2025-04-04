@@ -50,6 +50,7 @@ variable "node_groups" {
         max_size     = number
         min_size     = number
         })
+        
     }))
     default = {
         general = {
