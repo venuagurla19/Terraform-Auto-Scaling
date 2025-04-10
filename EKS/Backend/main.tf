@@ -37,4 +37,9 @@
         name = "LockID"
         type = "S"
     }
+
+
+tags = {
+    Name = "terraform-lock-table"
     }
+}    
